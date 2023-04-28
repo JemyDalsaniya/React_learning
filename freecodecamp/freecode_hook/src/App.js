@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, {useState} from "react";
 import "./style.css"
 import logo2 from "./images/logo2.jpeg"
 import logo3 from "./images/logo3.jpg"
@@ -8,9 +8,7 @@ import Box from "./Box"
 import boxes from "./boxes";
 import Joke from "./Joke"
 import jokesData from "./jokesData"
-
-
-
+import WindowTracker from "./WindowTracker";
 
 // userState is mainly used to perform something while some event occurs
 /**
@@ -220,6 +218,30 @@ function ShowHideExample(){
 }
 
 
+function StateEffectHookExample(){
 
-export default ShowHideExample
+    /**
+     * Challenge:
+     * 1. Create state called `show`, default to `true`
+     * 2. When the button is clicked, toggle `show`
+     * 3. Only display `<WindowTracker>` if `show` is `true`
+     */
+
+    const [show,setShow] = useState()
+
+    function handleShow() {
+        setShow(prevShow => !prevShow)
+    }
+
+    return (
+        <div className="container">
+            <button onClick={handleShow}>
+                Toggle WindowTracker
+            </button>
+            {show && <WindowTracker />}
+        </div>
+    )
+}
+
+export default StateEffectHookExample
 // export default Counter
