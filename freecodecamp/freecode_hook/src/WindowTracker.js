@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from "react"
+import React, {createContext, useContext, useEffect, useState} from "react"
 
-export default function WindowTracker() {
+
+//useEffect Example
+function WindowTracker() {
     /**
      * Challenge:
      * 1. Create state called `windowWidth`, default to
@@ -10,13 +12,10 @@ export default function WindowTracker() {
      *    every time it changes
      */
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-    useEffect(() => {
-        function watchWindow() {
+    useEffect(() => {const watchWindow = ()=>  {
             setWindowWidth(window.innerWidth)
         }
         window.addEventListener("resize" , watchWindow)
-
         //return function inside useEffect is used for cleanup
         return () => {
             window.removeEventListener("resize", watchWindow)
@@ -27,3 +26,10 @@ export default function WindowTracker() {
         <h1>Window width: {windowWidth}</h1>
     )
 }
+
+
+//useContext Example = It is used to pass props using context so no need to pass the values in chain.
+
+export default WindowTracker;
+
+

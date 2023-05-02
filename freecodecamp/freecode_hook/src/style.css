@@ -189,12 +189,13 @@ button:focus {
 /*    margin-right: 4px;*/
 /*    border-radius: 5px;*/
 /*}*/
+/*
 * {
     box-sizing: border-box;
 }
 
 body {
-    background-color: #FF7C43;
+    !*background-color: #FF7C43;*!
     color: white;
     margin: 0;
     padding: 2rem;
@@ -215,3 +216,4 @@ button {
 h1 {
     text-align: center;
 }
+*/

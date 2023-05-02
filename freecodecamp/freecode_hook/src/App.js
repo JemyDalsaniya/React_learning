@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import "./style.css"
 import logo2 from "./images/logo2.jpeg"
 import logo3 from "./images/logo3.jpg"
@@ -9,6 +9,10 @@ import boxes from "./boxes";
 import Joke from "./Joke"
 import jokesData from "./jokesData"
 import WindowTracker from "./WindowTracker";
+import UserRefExample from "./UseRefExample";
+import UseReducerExample from "./UseReducerExample";
+import UseCallBackExample from "./UseCallBackExample";
+import useFetch from "./CustomHooks";
 
 // userState is mainly used to perform something while some event occurs
 /**
@@ -20,29 +24,29 @@ import WindowTracker from "./WindowTracker";
  */
 
 function StateExample() {
-  const [result,setResult] = React.useState("Yes")
+    const [result,setResult] = React.useState("Yes")
     let [isGoingOut,setIsGoingOut] = React.useState(true)
     console.log(isGoingOut,"isGoingOut")
 
     // const isGoingOut = true;
-     // let answer = isGoingOut ?  "Yes" : "No"
+    // let answer = isGoingOut ?  "Yes" : "No"
     // let answer = isGoingOut ?  setIsGoingOut(false) : setIsGoingOut(true)
 
     function handleClick() {
-      setIsGoingOut(prevState => !prevState)
-       return  isGoingOut ? setResult("Yes") : setResult("No")
+        setIsGoingOut(prevState => !prevState)
+        return  isGoingOut ? setResult("Yes") : setResult("No")
     }
 
     return (
-      <div className="state">
-        <h1 className="state--title">Do I feel like going out tonight?</h1>
-        <div className="state--value" onClick={handleClick}>
-            {/*onClick={handleClick}*/}
-          <h1>{result}</h1>
-            {/*<h1>answer</h1>*/}
+        <div className="state">
+            <h1 className="state--title">Do I feel like going out tonight?</h1>
+            <div className="state--value" onClick={handleClick}>
+                {/*onClick={handleClick}*/}
+                <h1>{result}</h1>
+                {/*<h1>answer</h1>*/}
+            </div>
         </div>
-      </div>
-  )
+    )
 }
 
 function StateArrayExample() {
@@ -174,7 +178,7 @@ function BoxExample(){
         <main>
             {squareElements}
         </main>
-)
+    )
 }
 
 function JokeExample(){
@@ -217,6 +221,82 @@ function ShowHideExample(){
 
 }
 
+//useEffect example is in WindowTracker file
+
+
+//useContext Example = It is used to pass props using context so no need to pass the values in chain.
+const UserContext = createContext();
+function Component1() {
+    const [user, setUser] = useState("Jesse Hall");
+
+    return (
+        <UserContext.Provider value={user}>
+            <h1>{`Hello ${user}!`}</h1>
+            <Component2 />
+        </UserContext.Provider>
+    );
+}
+
+function Component2() {
+    return (
+        <>
+            <h1>Component 2</h1>
+            <Component3 />
+        </>
+    );
+}
+
+function Component3() {
+    const user = useContext(UserContext);
+
+    return (
+        <>
+            <h1>Component 3</h1>
+            <h2>{`Hello ${user} again!`}</h2>
+        </>
+    );
+}
+
+
+function UseRefExample(){
+
+    return (
+            <div>
+                <UserRefExample />
+            </div>
+    );
+}
+
+function UseReducerExample1() {
+
+    return(
+        <div>
+            <UseReducerExample />
+        </div>
+    )
+}
+
+function UseCallbackExample() {
+
+    return(
+        <div>
+            <UseCallBackExample />
+        </div>
+    )
+}
+
+function CustomHook() {
+    const [data] = useFetch("https://jsonplaceholder.typicode.com/todos");
+
+    return (
+        <>
+            {data &&
+                data.map((item) => {
+                    return <p key={item.id}>{item.id}&nbsp;&nbsp;{item.title}</p>;
+                })}
+        </>
+    );
+}
 
 function StateEffectHookExample(){
 
@@ -243,5 +323,10 @@ function StateEffectHookExample(){
     )
 }
 
-export default StateEffectHookExample
+// export default StateEffectHookExample
 // export default Counter
+// export default Component1;
+// export default UseRefExample;
+// export default UseReducerExample1;
+// export default UseCallBackExample;
+export default CustomHook;
